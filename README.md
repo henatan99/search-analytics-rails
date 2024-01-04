@@ -108,7 +108,7 @@ This is a Ruby on Rails Test Project for Helpjuice ti build a search engine anal
             end
         ```
 3. Article model for articles table belongs to a user
-    - `rails generate model Article title:string body:text`
+    - `rails generate model Article title:string body:text user:references`
     - The Article model looks like
         ```
             class Article < ApplicationRecord
