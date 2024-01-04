@@ -1,7 +1,10 @@
-<%= form_with model: @article do |form| %>
+
+<div class='article-form'>
+    <h2>Edit Article</h2>
+    <%= form_with model: @article do |form| %>
     <div>
         <%= form.label :title %><br>
-        <%= form.text_field :title %>
+        <%= form.text_field :title,  class: "form-input" %>
         <% @article.errors.full_messages_for(:title).each do |message| %>
             <div><%= message %></div>
         <% end %>
@@ -9,7 +12,7 @@
 
     <div>
         <%= form.label :body %><br>
-        <%= form.text_field :body %>
+        <%= form.text_area :body,  class: "form-input", rows: 8 %>
         <% @article.errors.full_messages_for(:body).each do |message| %>
             <div><%= message %></div>
         <% end %>
@@ -17,5 +20,6 @@
 
     <div>
         <%= form.submit %>
-    </div>
-<% end %>
+        </div>
+    <% end %>
+</div>

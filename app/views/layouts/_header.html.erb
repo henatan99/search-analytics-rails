@@ -1,47 +1,49 @@
 <header>
-    <nav>
-        <div>
-            <span>
+    <nav class='nav'>
+        <div class='items-container'>
+            <span class='item'>
                 <% if user_signed_in? %>
                     Welcome, <%= current_user.email %>
                 <% else %>
                     Welcome, Guest!
-                    <p>Sign in to access more features.</p>
+                    Sign in to access more features.
                 <% end %>
             </span>
         </div>
-        <div>
-            <ul>
+        <div class='items-container'>
+            <ul class='items'>
                 <% if user_signed_in? %>
-                    <li>
+                    <li class='item'>
                         <%= button_to 'Logout', destroy_user_session_path, method: :delete %>
                     </li>
                 <% else %>
-                    <li>
+                    <li class='item'>
                         <%= link_to 'SignIn', new_user_session_path %>
                     </li>
-                    <li>
+                    <li class='item'>
                         <%= link_to 'Register', new_user_session_path %>
                     </li>
                 <% end %>
             </ul>
         </div>
     </nav>
-    <nav>
-        <div>
+    <nav class='nav bottom-nav'>
+        <div class='items-container'>
             <%= link_to root_path do%>
                 <h2>InsightFull</h2>
             <% end %>
-            <ul>
-                <li>
+        </div>
+        <div class='items-container'>
+            <ul class='items'>
+                <li class='item'>
                     <%= link_to 'Home', root_path %>
                 </li>
                 <% if !current_page?(articles_path) %>
-                    <li>
+                    <li class='item'>
                         <%= link_to 'Articles', root_path %>
                     </li>
                 <% end %>
-                <li>
+                <li class='item'>
                     <%= link_to 'About', root_path %>
                 </li>
             </ul>

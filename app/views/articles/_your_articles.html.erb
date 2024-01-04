@@ -1,9 +1,13 @@
-<h2>Your Articles</h2>
+<div class='your-articles'>
+    <h2>
+        <%= articles_title %>
+    </h2>
 
-<ul>
-    <% current_user.articles.each do |article| %>
-        <li>
-            <%= link_to article.title, article %>
-        </li>
-    <% end %>
-</ul>
+    <ul class='side-items'>
+        <% your_articles.each do |article| %>
+            <li>
+                <%= link_to article.title, article %>
+            </li>
+        <% end %>
+    </ul>
+</div>
