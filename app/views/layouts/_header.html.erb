@@ -1,0 +1,50 @@
+<header>
+    <nav>
+        <div>
+            <span>
+                <% if user_signed_in? %>
+                    Welcome, <%= current_user.email %>
+                <% else %>
+                    Welcome, Guest!
+                    <p>Sign in to access more features.</p>
+                <% end %>
+            </span>
+        </div>
+        <div>
+            <ul>
+                <% if user_signed_in? %>
+                    <li>
+                        <%= button_to 'Logout', destroy_user_session_path, method: :delete %>
+                    </li>
+                <% else %>
+                    <li>
+                        <%= link_to 'SignIn', new_user_session_path %>
+                    </li>
+                    <li>
+                        <%= link_to 'Register', new_user_session_path %>
+                    </li>
+                <% end %>
+            </ul>
+        </div>
+    </nav>
+    <nav>
+        <div>
+            <%= link_to root_path do%>
+                <h2>InsightFull</h2>
+            <% end %>
+            <ul>
+                <li>
+                    <%= link_to 'Home', root_path %>
+                </li>
+                <% if !current_page?(articles_path) %>
+                    <li>
+                        <%= link_to 'Articles', root_path %>
+                    </li>
+                <% end %>
+                <li>
+                    <%= link_to 'About', root_path %>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
