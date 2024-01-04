@@ -1,5 +1,18 @@
-<div>
-    <input placeholder='Search for Articles'/>
-    <%= render 'your_articles' %>
-    <%= render 'articles' %>
+<div class="articles-container">
+    <% if user_signed_in? %>
+        <div class='left-section'>
+            <%= render 'your_articles', your_articles: current_user.articles, articles_title: 'Your Articles' %>
+        </div>
+    <% else %>
+        <div class='left-section'>
+            <%= render 'your_articles', your_articles: @articles, articles_title: 'Recents' %>
+        </div>
+    <% end %>
+    
+    <div class="right-section">
+        <div class='search-bar'>
+            <input placeholder='Search for Articles'/>
+        </div>
+        <%= render 'articles' %>
+    </div>
 </div>

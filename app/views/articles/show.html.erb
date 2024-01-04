@@ -1,13 +1,19 @@
-<h1><%= @article.title %></h1>
+<div class='article-show'>
+    <button class='back-to-articles'>
+        <%= link_to "Back", articles_path %>
+    </button>
+    <h1 class='article-show-title'><%= @article.title %></h1>
 
-<p><%= @article.body %></p>
+    <p class='article-show-body'><%= @article.body %></p>
 
-<% if user_signed_in? && current_user === @article.user %>
-    <ul>
-        <li><%= link_to "Edit", edit_article_path(@article) %></li>
-        <li><%= link_to "Delete", new_article_path(@article), data: {
-            turbo_method: :delete,
-            turbo_confirm: "Are you sure?"
-        } %></li>
-    </ul>
-<% end %>
+    <% if user_signed_in? && current_user === @article.user %>
+        <ul class='article-btns-wrapper'>
+            <li class='btn-md'><%= link_to "Edit", edit_article_path(@article) %></li>
+            <li class='btn-md'><%= link_to "Delete", new_article_path(@article), data: {
+                turbo_method: :delete,
+                turbo_confirm: "Are you sure?"
+            } %></li>
+        </ul>
+    <% end %>
+</div>
+
