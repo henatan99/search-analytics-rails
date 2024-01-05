@@ -189,6 +189,7 @@
             };
     
                 searchInput.addEventListener('input', handleSearchInput);
+                window.addEventListener('input', handleSearchesRecord);
                 window.addEventListener('beforeunload', handleSearchesRecord);
                 window.addEventListener('unload', handleSearchesRecord);
                 searchBtn.addEventListener('submit', handleSearchesRecord);
