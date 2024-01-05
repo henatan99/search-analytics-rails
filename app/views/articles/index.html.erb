@@ -71,6 +71,7 @@
                         .then(error => console.error('Error fetching search records:', error));
                     
                 }
+                console.log('now check session storage', sessionStorage.getItem('searchKeywords'));
                 ListSessionSearchRecords(sessionStorage.getItem('searchKeywords'));
             };
 
