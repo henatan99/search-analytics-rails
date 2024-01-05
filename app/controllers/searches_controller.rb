@@ -24,10 +24,10 @@ class SearchesController < ApplicationController
             if @search.save
                 render json: { message: 'Search was successfully created.' }, status: :created
             else
-                render json: { errors: @search.errors.full_messages }, status: :unprocessable_entity
+                render json: { errors: @search.errors.full_messages, remote_ip: request.remote_ip }, status: :unprocessable_entity
             end
         rescue => e
-            render json: { error: e.message }, status: :internal_server_error
+            render json: { error: e.message, remote_ip: request.remote_ip }, status: :internal_server_error
         end
     end
 
