@@ -233,3 +233,12 @@ header a {
     background-color: #2980b9;
     border-color: #2980b9;
 }
+
+
+/* search records */
+
+.search-records {
+    list-style: none;
+    display: flex;
+    gap: 3px;
+}
