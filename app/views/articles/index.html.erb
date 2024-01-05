@@ -42,7 +42,7 @@
 
             const recordSearch = (query) => {
                 console.log('I am about to record search');
-                const ip_addresse_id = 1;
+                const ip_address_id = 1;
 
                 fetch('/searches', {
                     method: 'POST',
@@ -50,7 +50,7 @@
                         'Content-Type': 'application/json',
                         'X-CSRF-Token': getCSRFToken(),
                     },
-                    body: JSON.stringify({ query, ip_addresse_id }),
+                    body: JSON.stringify({ query, ip_address_id }),
                 })
                 .then(response => response.json())
                 .then(data => console.log(data)
