@@ -1,4 +1,5 @@
 class SearchesController < ApplicationController
+    protect_from_forgery with: :exception
 
     def index
         ip_address_id = params[:ip_address_id]

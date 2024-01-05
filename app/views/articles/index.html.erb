@@ -41,6 +41,7 @@
             const debounceDelay = 1000;
 
             const recordSearch = (query) => {
+                console.log('I am about to record search');
                 fetch('/searches', {
                     method: 'POST',
                     headers: {
