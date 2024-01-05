@@ -2,6 +2,35 @@
 
 This is a Ruby on Rails Test Project for Helpjuice ti build a search engine analytics app. 
 
+## App Features
+
+### Articles page
+- Articles page is the main page where all the articles are listed whether a user is signed in or not.
+![Screenshot](docs/articles.png)
+
+#### Search engine
+- The articles page has search input where users can make instance searches. 
+- The input event triggers api fetch of all articles filtered by the search input query 
+- In addition the input event also triggers recording searches by avoiding 'pyramid problem' by comparing each input state with the existingSearches in the sessionStorage. 
+- Then the existingSearches will be sent to database via api post request and sessionStorage is renewed when 
+    (a) submit action is invoked either by button or by pressing 'Enter' key
+    (b) when page is refreshed
+    (c) when page/browser is closed
+- The articles page also displayes the list of search keywords from api corresponsing to the users ip_address
+![Screenshot](docs/instance_search.png)
+
+### Article show page
+- Users can also view article page of any article regardless of autherntication or autorization
+- But only authenticated and owner of the article can edit or delete the article
+
+![Screenshot](docs/article_show.png)
+
+### New Article page
+- Authenticated (logged in) users can create article. user_id is required to create article
+
+![Screenshot](docs/new_article.png)
+
+
 ## Problem Description
 
 - To create a realtime search box, where users search articles, and then to have analytics that display what users were searching for. You can also track via IP - no need to create a devise, etc.
