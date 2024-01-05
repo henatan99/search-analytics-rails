@@ -53,7 +53,7 @@
             const handleSearchInput = () =>  {
                 const query = event.target.value.trim();
                 console.log('query', query)
-                storeSeaches(query);
+                storeSearches(query);
                 if(query) {
                     fetch(`articles.json?query=${encodeURIComponent(query)}`)
                         .then(response => response.json())
