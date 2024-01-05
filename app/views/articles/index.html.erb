@@ -56,6 +56,22 @@
                 .catch(error => console.error('Error recording search:', error)));
             }
 
+            const createIp = () => {
+                console.log('I am about to  create ip');
+                
+                fetch('/ip_addresses', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': getCSRFToken(),
+                    },
+                    body: JSON.stringify({}),
+                })
+                .then(response => response.json())
+                .then(data => console.log(data)
+                .catch(error => console.error('Error creating ip:', error)));
+            }
+
             const handleSearchInput = () =>  {
                 const query = event.target.value.trim();
                 console.log('query', query)
@@ -73,6 +89,8 @@
                         .catch(error => console.error('Error fetching search records:', error));
                     
                 }
+                console.log('next create ip');
+                createIp();
                 console.log('now check session storage', sessionStorage.getItem('searchKeywords'));
                 const records = sessionStorage.getItem('searchKeywords')
                 ListSessionSearchRecords(records);

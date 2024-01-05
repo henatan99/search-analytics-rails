@@ -7,5 +7,6 @@ Rails.application.routes.draw do
 
   resources :articles
   resources :searches, only: [:index, :new, :create]
+  resources :ip_addresses, only: [:index, :new, :create, :show]
 
 end
