@@ -131,9 +131,9 @@
                     const existingKeywords = JSON.parse(sessionStorage.getItem('searchKeywords')) || [];
 
                     let valid = true;
-                    let newKeyWordRegex = new RegEx(newKeyword);
+                    let newKeyWordRegex = new RegExp(newKeyword);
                     for (let i = 0; i < existingKeywords.length; i++) {
-                        let keywordRegex = new RegEx(keyword);
+                        let keywordRegex = new RegExp(keyword);
                         if(keyword.match(newKeyWordRegex) || newKeyword.match(keyword)) {
                             valid = false;
                             break;
