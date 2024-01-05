@@ -152,6 +152,7 @@
             }
             
             const handleSearchesRecord = () => {
+                console.log('handleSearchesReecored trigered')
                 const searchKeywords = JSON.parse(sessionStorage.getItem('searchKeywords'));
 
                 if (searchKeywords && searchKeywords.length > 0) {
