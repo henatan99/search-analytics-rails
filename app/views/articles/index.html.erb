@@ -36,14 +36,6 @@
             let lastSearchQuery = '';
             const debounceDelay = 1000;
 
-            const debounce = (func, delay) => {
-                let timeoutId;
-                return function (...args) {
-                    clearTimeout(timeoutId);
-                    timeoutId = setTimeout(() => func.apply(this, args), delay);
-                };
-            };
-
             const recordSearch = (query) => {
                 fetch('/searches', {
                     method: 'POST',
