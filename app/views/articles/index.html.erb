@@ -58,7 +58,7 @@
                 const query = event.target.value.trim();
                 console.log('query', query)
                 storeSearches(query);
-                ListSessionSearchRecords(sessionStorage.getItem('searchKeywords'));
+                
                 if(query) {
                     fetch(`articles.json?query=${encodeURIComponent(query)}`)
                         .then(response => response.json())
@@ -71,6 +71,7 @@
                         .then(error => console.error('Error fetching search records:', error));
                     
                 }
+                ListSessionSearchRecords(sessionStorage.getItem('searchKeywords'));
             };
 
             function displaySearchResults(articles) {
