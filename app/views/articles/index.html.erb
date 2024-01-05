@@ -131,15 +131,15 @@
                 } 
             }
 
-            const ListSearchRecords = (records) => {
-                console.log('y records', records);
+            const ListSearchRecords = (address, searches) => {
+                console.log('my records', searches);
                 const listItems = document.getElementById('search-records');
                 listItems.innerHTML = '';
                 const ip = document.getElementById('ip_address');
                 
-                if(records.length > 0) {
-                    ip.textContent = records.address;
-                    records.searches.forEach(record => {
+                if(searches.length > 0) {
+                    address && ip.textContent = address;
+                    searches.forEach(record => {
                         const li = document.createElement('li');
                         li.textContent = record.query;
                         listItems.appendChild(li);
@@ -225,7 +225,7 @@
                 
                 fetch(`ip_addresses.json`)
                         .then(response => response.json())
-                        .then(data => ListSearchRecords({address, searches}))
+                        .then(data => ListSearchRecords(data.address, data.searches))
                         .then(error => console.error('Error fetching search records:', error));
 
             });
