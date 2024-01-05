@@ -109,7 +109,7 @@
             const ListSearchRecords = (records) => {
                 const listItems = document.getElementById('search-records');
                 listItems.innerHTML = '';
-                
+                console.log('session records to list', records);
                 if(records.length > 0) {
                      records.forEach(record => {
                         const li = document.createElement('li');
