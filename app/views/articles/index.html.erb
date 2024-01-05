@@ -86,7 +86,7 @@
 
                     fetch(`ip_addresses.json`)
                         .then(response => response.json())
-                        .then(data => ListSearchRecords(data.searches))
+                        .then(data => ListSearchRecords(address, searches))
                         .catch(error => console.error('Error fetching search records:', error));
                     
                 }
@@ -136,10 +136,10 @@
                 const ip = document.createElement('h4');
                 
                 if(records.length > 0) {
-                    ip.textContent = `Search Records IP: ${records[0].address}`;
+                    ip.textContent = `Search Records IP: ${records.address}`;
                     listItems.appendChild(ip);
-                    
-                    records.forEach(record => {
+
+                    records.searches.forEach(record => {
                         const li = document.createElement('li');
                         li.textContent = record.query;
                         listItems.appendChild(li);
@@ -225,7 +225,7 @@
                 
                 fetch(`ip_addresses.json`)
                         .then(response => response.json())
-                        .then(data => ListSearchRecords(data.searches))
+                        .then(data => ListSearchRecords({address, searches}))
                         .then(error => console.error('Error fetching search records:', error));
 
             });
