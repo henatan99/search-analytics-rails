@@ -240,11 +240,18 @@ header a {
 .search-records {
     list-style: none;
     display: flex;
+    flex-flow: row-wrap;
     gap: 3px;
 }
 
 .search-records li {
-    border: solid 1px;
-    background-color: #e6f7ff;
-    padding: 3px;
+    margin: 0;
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }

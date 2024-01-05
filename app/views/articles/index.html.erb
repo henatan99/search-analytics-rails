@@ -133,8 +133,11 @@
             const ListSearchRecords = (records) => {
                 const listItems = document.getElementById('search-records');
                 listItems.innerHTML = '';
+                const ip = document.createElement('h4');
+                
                 if(records.length > 0) {
-                     records.forEach(record => {
+                    ip.textContent = `Search Records IP: ${records[0].address}`;
+                    records.forEach(record => {
                         const li = document.createElement('li');
                         li.textContent = record.query;
                         listItems.appendChild(li);
