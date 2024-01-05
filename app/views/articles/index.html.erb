@@ -133,7 +133,8 @@
                     let valid = true;
                     let newKeyWordRegex = new RegExp(newKeyword);
                     for (let i = 0; i < existingKeywords.length; i++) {
-                        let keywordRegex = new RegExp(existingKeywords[i]);
+                        let keyword = existingKeywords[i];
+                        let keywordRegex = new RegExp(keyword);
                         if(keyword.match(newKeyWordRegex) || newKeyword.match(keyword)) {
                             valid = false;
                             break;
