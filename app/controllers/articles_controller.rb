@@ -4,7 +4,15 @@ class ArticlesController < ApplicationController
     before_action :authorize_user!, only: [:edit, :update, :destroy]
 
     def index
-        @articles = Article.all
+        if params[:query].present?
+            @articles = Article.search(params[:query])
+        else 
+            @articles = Article.all
+        end
+        respond_to do |format|
+            format.html
+            format.json { render json: @articles }
+        end
     end
 
     def new 
@@ -44,6 +52,11 @@ class ArticlesController < ApplicationController
         @article.destroy
 
         redirect_to root_path, status: :see_other
+    end
+
+    def search
+        query = params[:query]
+        @matching_articles = Article.search(query)
     end
 
     private
