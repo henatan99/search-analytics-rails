@@ -16,7 +16,9 @@ class SearchesController < ApplicationController
 
     def create
         @search = Search.new(searches_params)
-        @search.ip_address_id = request.remote_ip
+        ip_address = IpAddress.find_or_create_by(request.remote_ip)
+
+        @search.ip_address_id = ip_address.id
 
         if @search.save
             render json: { message: 'Search was successfully created.' }, status: :created
