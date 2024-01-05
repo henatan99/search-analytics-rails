@@ -29,7 +29,7 @@ class SearchesController < ApplicationController
 
     private
         def searches_params
-            params.require(:search).permit(:query, :ip_address_id)
+            params.require(:search).permit(:query)
         end
 
 end
