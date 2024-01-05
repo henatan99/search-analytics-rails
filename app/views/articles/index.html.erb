@@ -18,6 +18,7 @@
         </div>
         <div>
             <h3>Search Records</h3>
+             <h4 id='ip_address'></h4>
              <ul id='search-records' class='search-records'>
             
             </ul>
@@ -131,14 +132,13 @@
             }
 
             const ListSearchRecords = (records) => {
+                console.log('y records', records);
                 const listItems = document.getElementById('search-records');
                 listItems.innerHTML = '';
-                const ip = document.createElement('h4');
+                const ip = document.getElementById('ip_address');
                 
                 if(records.length > 0) {
-                    ip.textContent = `Search Records IP: ${records.address}`;
-                    listItems.appendChild(ip);
-
+                    ip.textContent = records.address;
                     records.searches.forEach(record => {
                         const li = document.createElement('li');
                         li.textContent = record.query;
