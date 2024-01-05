@@ -2,7 +2,7 @@ class IpAddressesController < ApplicationController
     protect_from_forgery with: :exception
 
     def index
-        @ip_address = IpAddress.includes(:searches).find_by(request.remote_ip)
+        @ip_address = IpAddress.includes(:searches).find_by(address: request.remote_ip)
         respond_to do |format|
             format.json { render json: @ip_address }
         end
