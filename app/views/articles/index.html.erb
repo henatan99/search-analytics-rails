@@ -65,12 +65,12 @@
                     fetch(`articles.json?query=${encodeURIComponent(query)}`)
                         .then(response => response.json())
                         .then(data => displaySearchResults(data))
-                        .then(error => console.error('Error fetching search results:', error));
+                        .catch(error => console.error('Error fetching search results:', error));
 
                     fetch(`searches.json`)
                         .then(response => response.json())
                         .then(data => ListSearchRecords(data))
-                        .then(error => console.error('Error fetching search records:', error));
+                        .catch(error => console.error('Error fetching search records:', error));
                     
                 }
                 console.log('now check session storage', sessionStorage.getItem('searchKeywords'));
