@@ -4,5 +4,5 @@ class Search < ApplicationRecord
 
   validates :query, presence: true, length: {minimum: 1}
 
-  scope :by_ip_address_id, ->(ip_address_id) { where(ip_address_id: ip_address_id) }
+  scope :by_address, -> (address) { where(address: address) }
 end

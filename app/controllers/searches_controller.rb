@@ -2,8 +2,8 @@ class SearchesController < ApplicationController
     protect_from_forgery with: :exception
 
     def index
-        ip_address_id = request.remote_ip
-        @searches = Search.by_ip_address_id(ip_address_id)
+        ip_address = request.remote_ip
+        @searches = Search.by_address(ip_address)
         respond_to do |format|
             format.html
             format.json { render json: @searches }
