@@ -21,6 +21,10 @@
              <ul id='search-records'>
             
             <ul>
+            <h3>Session Search Records</h3>
+             <ul id='session-search-records'>
+            
+            <ul>
         </div>
         <%= render 'articles' %>
 
@@ -54,6 +58,7 @@
                 const query = event.target.value.trim();
                 console.log('query', query)
                 storeSearches(query);
+                ListSessionSearchRecords(sessionStorage.getItem('searchKeywords'));
                 if(query) {
                     fetch(`articles.json?query=${encodeURIComponent(query)}`)
                         .then(response => response.json())
@@ -103,6 +108,20 @@
 
             const ListSearchRecords = (records) => {
                 const listItems = document.getElementById('search-records');
+                listItems.innerHTML = '';
+                
+                if(records.length > 0) {
+                     records.forEach(record => {
+                        const li = document.createElement('li');
+                        li.textContent = record;
+                        listItems.appendChild(li);
+                    })
+                }
+            }
+
+
+            const ListSessionSearchRecords = (records) => {
+                const listItems = document.getElementById('session-search-records');
                 listItems.innerHTML = '';
                 
                 if(records.length > 0) {
