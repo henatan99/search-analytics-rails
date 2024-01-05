@@ -16,7 +16,7 @@ class SearchesController < ApplicationController
 
     def create
         @search = Search.new(searches_params)
-        ip_address = IpAddress.find_or_create_by(request.remote_ip)
+        ip_address = IpAddress.find_or_create_by(request.remote_ip || '196.191.112.155')
 
         @search.ip_address_id = ip_address.id
 
