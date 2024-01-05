@@ -11,8 +11,183 @@
     
     <div class="right-section">
         <div class='search-bar'>
-            <input placeholder='Search for Articles'/>
+            <form id='searchForm'>
+                <input placeholder='Search for Articles' id='search-input'/>
+                <button type='submit' id='search-submit'>Submit</button>
+            </form>
+        </div>
+        <div>
+            <h3>Search Records</h3>
+             <ul id='search-records'>
+            
+            <ul>
         </div>
         <%= render 'articles' %>
+
+        <script>
+        document.addEventListener('turbo:load', function() {
+            const searchInput = document.getElementById('search-input');
+            const searchBtn = document.getElementById('search-submit');
+
+            if (!sessionStorage.getItem('searchKeywords')) {
+                sessionStorage.setItem('searchKeywords', JSON.stringify([]));
+            }
+
+            let lastSearchQuery = '';
+            const debounceDelay = 1000;
+
+            const debounce = (func, delay) => {
+                let timeoutId;
+                return function (...args) {
+                    clearTimeout(timeoutId);
+                    timeoutId = setTimeout(() => func.apply(this, args), delay);
+                };
+            };
+
+            const recordSearch = (query) => {
+                fetch('/searches', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': getCSRFToken(),
+                    },
+                    body: JSON.stringify({ query }),
+                })
+                .then(response => response.json())
+                .then(data => console.log(data)
+                .then(error => console.error('Error recording search:', error)));
+            }
+
+            const handleSearchInput = () =>  {
+                const query = event.target.value.trim();
+                console.log('query', query)
+                storeSeaches(query);
+                if(query) {
+                    fetch(`articles.json?query=${encodeURIComponent(query)}`)
+                        .then(response => response.json())
+                        .then(data => displaySearchResults(data))
+                        .then(error => console.error('Error fetching search results:', error));
+
+                    fetch(`searches.json`)
+                        .then(response => response.json())
+                        .then(data => ListSearchRecords(data))
+                        .then(error => console.error('Error fetching search records:', error));
+                    
+                }
+            };
+
+            function displaySearchResults(articles) {
+                const searchResultsContainer = document.getElementById('articles-wrapper');
+                searchResultsContainer.innerHTML = '';
+
+                if(articles.length > 0) {
+                    const ul = document.createElement('ul');
+
+                    articles.forEach(article => {
+                        const li = document.createElement('li');
+
+                        const a = document.createElement('a');
+                        a.setAttribute('href', `/articles/${article.id}`)
+                        
+                        const h2 = document.createElement('h2');
+                        h2.textContent = article.title;
+                        h2.classList.add('article-title')
+
+                        const p = document.createElement('p');
+                        p.textContent = article.body;
+                        p.classList.add('article-body');
+
+                        a.appendChild(h2);
+
+                        li.appendChild(a);
+                        li.appendChild(p);
+                    
+                        ul.appendChild(li);
+                    });
+
+                    searchResultsContainer.appendChild(ul);
+                } else {
+                    const pr = document.createElement('p');
+                    p.textContent = 'No articles found.';
+                    searchResultsContainer.appendChild(pr);
+                }
+            }
+
+            const ListSearchRecords = (records) => {
+                const listItems = document.getElementById('search-records');
+                listItems.innerHTML = '';
+                
+                if(records.length > 0) {
+                     records.forEach(record => {
+                        const li = document.createElement('li');
+                        li.textContent = record;
+                        listItems.appendChild(li);
+                    })
+                }
+            }
+
+            function getCSRFToken() {
+                const csrfTokenMeta = document.head.querySelector('meta[name="csrf-token"]');
+                return csrfTokenMeta ? csrfTokenMeta.content : '';
+            }
+
+            const storeSearches = (newKeyword) => {
+                if (!sessionStorage.getItem('searchKeywords')) {
+                    sessionStorage.setItem('searchKeywords', JSON.stringify([]));
+                }
+                if (newKeyword !== '') {
+                    const existingKeywords = JSON.parse(sessionStorage.getItem('searchKeywords')) || [];
+
+                    let valid = true;
+                    let newKeyWordRegex = new RegEx(newKeyword);
+                    for (let i = 0; i < existingKeywords.length; i++) {
+                        let keywordRegex = new RegEx(keyword);
+                        if(keyword.match(newKeyWordRegex) || newKeyword.match(keyword)) {
+                            valid = false;
+                            break;
+                        }
+                    }
+                    
+                    if (valid) {
+                        existingKeywords.push(newKeyword);
+                        sessionStorage.setItem('searchKeywords', JSON.stringify(existingKeywords));
+
+                        console.log('Updated Search Keywords:', existingKeywords);
+                    } else {
+                        console.log('Keyword already exists:', newKeyword);
+                    }
+                }
+            }
+            
+            const handleSearchesRecord = () => {
+                const searchKeywords = JSON.parse(sessionStorage.getItem('searchKeywords'));
+
+                if (searchKeywords && searchKeywords.length > 0) {
+                        searchKeywords.forEach(keyword => {
+                        recordSearch(keyword);
+                    });
+                }
+                sessionStorage.removeItem('searchKeywords');
+                
+            };
+    
+                searchInput.addEventListener('input', handleSearchInput);
+                window.addEventListener('beforeunload', handleSearchesRecord);
+                window.addEventListener('unload', handleSearchesRecord);
+                searchBtn.addEventListener('submit', handleSearchesRecord);
+
+                fetch(`articles.json`)
+                            .then(response => response.json())
+                            .then(data => displaySearchResults(data))
+                            .then(error => console.error('Error fetching search results:', error));
+                
+                fetch(`searches.json`)
+                        .then(response => response.json())
+                        .then(data => ListSearchRecords(data))
+                        .then(error => console.error('Error fetching search records:', error));
+
+            });
+
+    </script>
     </div>
 </div>
