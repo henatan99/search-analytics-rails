@@ -137,6 +137,8 @@
                 
                 if(records.length > 0) {
                     ip.textContent = `Search Records IP: ${records[0].address}`;
+                    listItems.appendChild(ip);
+                    
                     records.forEach(record => {
                         const li = document.createElement('li');
                         li.textContent = record.query;
