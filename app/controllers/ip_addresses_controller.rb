@@ -21,7 +21,7 @@ class IpAddressesController < ApplicationController
 
     def create
         begin
-            @ip_address = IpAddress.new(request.remote_ip)
+            @ip_address = IpAddress.new(address: request.remote_ip)
                 
             if @ip_address.save
                 render json: { message: 'Search was successfully created.' }, status: :created
