@@ -17,7 +17,7 @@ This is a Ruby on Rails Test Project for Helpjuice ti build a search engine anal
     (b) when page is refreshed
     (c) when page/browser is closed
 - The articles page also displayes the list of search keywords from api corresponsing to the users ip_address
-![Screenshot](docs/instance_search.png)
+![Screenshot](docs/instance_search.gif)
 
 ### Article show page
 - Users can also view article page of any article regardless of autherntication or autorization
