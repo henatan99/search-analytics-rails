@@ -299,7 +299,7 @@ Optionally defining the search method inside the model instead of the controller
 - The articles route is the page to display list of articles and also have search input 
 - The users routes is for authenticated users who can create articles 
 
-## Live demo []()
+## [Live demo](https://search-analytics-rails-74733d3ea510.herokuapp.com/)
 
 ## Built With
 

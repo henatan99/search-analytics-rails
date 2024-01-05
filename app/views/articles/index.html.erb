@@ -125,7 +125,7 @@
                 }
                 if (newKeyword !== '') {
                     const existingKeywords = JSON.parse(sessionStorage.getItem('searchKeywords')) || [];
-
+                    const newKeywords = [];
                     let valid = true;
                     let newKeyWordRegex = new RegExp(newKeyword);
                     for (let i = 0; i < existingKeywords.length; i++) {
@@ -134,14 +134,17 @@
                         if(keyword.match(newKeyWordRegex)) {
                             valid = false;
                             break;
+                        } 
+                        if(!newKeyword.match(keywordRegex)) {
+                            newKeywords.push(keyword);
                         }
                     }
     
                     if (valid) {
-                        existingKeywords.push(newKeyword);
-                        sessionStorage.setItem('searchKeywords', JSON.stringify(existingKeywords));
+                        newKeywords.push(newKeyword);
+                        sessionStorage.setItem('searchKeywords', JSON.stringify(newKeywords));
 
-                        console.log('Updated Search Keywords:', existingKeywords);
+                        console.log('Updated Search Keywords:', newKeywords);
                     } else {
                         console.log('Keyword already exists:', newKeyword);
                     }
