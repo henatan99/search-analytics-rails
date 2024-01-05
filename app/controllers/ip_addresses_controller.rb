@@ -4,7 +4,7 @@ class IpAddressesController < ApplicationController
     def index
         @ip_address = IpAddress.includes(:searches).find_by(address: request.remote_ip)
         respond_to do |format|
-            format.json { render json: @ip_address }
+            format.json { render json: @ip_address.as_json(include: :searches) }
         end
     end
 

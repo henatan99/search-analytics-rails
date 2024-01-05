@@ -86,7 +86,7 @@
 
                     fetch(`ip_addresses.json`)
                         .then(response => response.json())
-                        .then(data => ListSearchRecords(data))
+                        .then(data => ListSearchRecords(data.searches))
                         .catch(error => console.error('Error fetching search records:', error));
                     
                 }
@@ -220,7 +220,7 @@
                 
                 fetch(`ip_addresses.json`)
                         .then(response => response.json())
-                        .then(data => ListSearchRecords(data))
+                        .then(data => ListSearchRecords(data.searches))
                         .then(error => console.error('Error fetching search records:', error));
 
             });
