@@ -2,7 +2,7 @@ class SearchesController < ApplicationController
     protect_from_forgery with: :exception
 
     def index
-        ip_address_id = params[:ip_address_id]
+        ip_address_id = request.remote_ip
         @searches = Search.by_ip_address_id(ip_address_id)
         respond_to do |format|
             format.html
