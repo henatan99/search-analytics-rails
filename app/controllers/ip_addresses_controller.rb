@@ -1,4 +1,4 @@
-class SearchesController < ApplicationController
+class IpAddressesController < ApplicationController
     protect_from_forgery with: :exception
 
     def index
