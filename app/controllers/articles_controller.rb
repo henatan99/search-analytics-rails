@@ -10,6 +10,7 @@ class ArticlesController < ApplicationController
             @articles = Article.all
         end
         respond_to do |format|
+            format.html
             format.json { render json: @articles }
         end
     end
