@@ -242,3 +242,9 @@ header a {
     display: flex;
     gap: 3px;
 }
+
+.search-records li {
+    border: solid 1px;
+    background-color: #e6f7ff;
+    padding: 3px;
+}
