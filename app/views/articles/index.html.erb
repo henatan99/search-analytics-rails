@@ -72,7 +72,8 @@
                     
                 }
                 console.log('now check session storage', sessionStorage.getItem('searchKeywords'));
-                ListSessionSearchRecords(sessionStorage.getItem('searchKeywords'));
+                const records = sessionStorage.getItem('searchKeywords')
+                ListSessionSearchRecords(records);
             };
 
             function displaySearchResults(articles) {
