@@ -210,14 +210,14 @@
 
                 fetch(`ip_addresses.json`)
                         .then(response => response.json())
-                        .then(data => {
+                        .then(data => (() => {
                             if (searchKeywords && searchKeywords.length > 0) {
                                     searchKeywords.forEach(keyword => {
                                     recordSearch(keyword, data.id);
                                 });
                             }
                             sessionStorage.removeItem('searchKeywords');
-                        }).catch(error => console.log('record searches error', error))
+                        })).catch(error => console.log('record searches error', error))
             };
     
                 searchInput.addEventListener('input', handleSearchInput);
