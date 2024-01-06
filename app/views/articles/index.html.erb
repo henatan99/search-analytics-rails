@@ -95,7 +95,7 @@
                 createIp();
                 console.log('now check session storage', sessionStorage.getItem('searchKeywords'));
                 const records = sessionStorage.getItem('searchKeywords')
-                ListSessionSearchRecords(records);
+                if(records) ListSessionSearchRecords(records);
             };
 
             function displaySearchResults(articles) {
