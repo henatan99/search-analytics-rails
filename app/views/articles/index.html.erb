@@ -41,7 +41,7 @@
             let lastSearchQuery = '';
             const debounceDelay = 1000;
 
-            const recordSearch = (query) => {
+            const recordSearch = (query, ip_address_id) => {
                 console.log('I am about to record search');
 
                 fetch('/searches', {
@@ -208,12 +208,16 @@
                 console.log('handleSearchesReecored trigered')
                 const searchKeywords = JSON.parse(sessionStorage.getItem('searchKeywords'));
 
-                if (searchKeywords && searchKeywords.length > 0) {
-                        searchKeywords.forEach(keyword => {
-                        recordSearch(keyword);
-                    });
-                }
-                sessionStorage.removeItem('searchKeywords');
+                fetch(`ip_addresses.json`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (searchKeywords && searchKeywords.length > 0) {
+                                    searchKeywords.forEach(keyword => {
+                                    recordSearch(keyword, data.id);
+                                });
+                            }
+                            sessionStorage.removeItem('searchKeywords');
+                        })
             };
     
                 searchInput.addEventListener('input', handleSearchInput);
