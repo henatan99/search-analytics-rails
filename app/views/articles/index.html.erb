@@ -36,6 +36,8 @@
 
             var ip_address_id;
 
+            createIp();
+
             fetch(`articles.json`)
                             .then(response => response.json())
                             .then(data => displaySearchResults(data))
@@ -43,10 +45,8 @@
                 
             fetch(`ip_addresses.json`)
                         .then(response => response.json())
-                        .then(data => ListSearchRecords(data.id, data.address, data.searches))
+                        .then(data => ListSearchRecords(data.address, data.searches))
                         .catch(error => console.error('Error fetching search records:', error));
-
-            
 
             if (!sessionStorage.getItem('searchKeywords')) {
                 sessionStorage.setItem('searchKeywords', JSON.stringify([]));
@@ -83,8 +83,8 @@
                     body: JSON.stringify({}),
                 })
                 .then(response => response.json())
-                .then(data => console.log(data)
-                .catch(error => console.error('Error creating ip:', error)));
+                .then(data => {ip_address_id = data.ip_address.id; console.log(data)})
+                .catch(error => console.error('Error creating ip:', error));
             }
 
             const handleSearchInput = () =>  {
@@ -102,13 +102,12 @@
                         .then(response => response.json())
                         .then(data => {
                             if(data) {
-                                ListSearchRecords(data.id, data.address, data.searches)
+                                ListSearchRecords(data.address, data.searches)
                             } else {
                                 createIp();
                             }
                         })
                         .catch(error => console.error('Error fetching search records:', error));
-                    
                 }
                 console.log('next create ip');
                 console.log('now check session storage', sessionStorage.getItem('searchKeywords'));
@@ -149,12 +148,11 @@
                 } 
             }
 
-            const ListSearchRecords = (id, address, searches) => {
+            const ListSearchRecords = (address, searches) => {
                 console.log('my records', searches);
                 const listItems = document.getElementById('search-records');
                 listItems.innerHTML = '';
                 const ip = document.getElementById('ip_address');
-                ip_address_id = id;
                 
                 if(searches.length > 0) {
                     ip.textContent = `Searches IP: ${address}`;

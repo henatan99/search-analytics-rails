@@ -20,17 +20,18 @@ class IpAddressesController < ApplicationController
     end
 
     def create
-        begin
+        ip_address = IpAddress.find_by(address: request.remote_ip)
+        if(ip_address) {
+            render json: { message: 'Search was successfully created.', ip_address: @ip_address}
+        } else {
             @ip_address = IpAddress.new(address: request.remote_ip)
                 
             if @ip_address.save
-                render json: { message: 'Search was successfully created.' }, status: :created
+                render json: { message: 'Search was successfully created.', ip_address: @ip_address}, status: :created
             else
                 render json: { errors: @ip_address.errors.full_messages, remote_ip: request.remote_ip }, status: :unprocessable_entity
             end
-        rescue => e
-            render json: { errors: ["An error occurred: #{e.message}"] }, status: :unprocessable_entity
-        end
+        }
     end
 
     private
