@@ -109,13 +109,7 @@
 
                     fetch(`ip_addresses.json`)
                         .then(response => response.json())
-                        .then(data => {
-                            if(data) {
-                                ListSearchRecords(data.address, data.searches)
-                            } else {
-                                createIp();
-                            }
-                        })
+                        .then(data => ListSearchRecords(data.address, data.searches))
                         .catch(error => console.error('Error fetching search records:', error));
                 }
                 console.log('next create ip');
