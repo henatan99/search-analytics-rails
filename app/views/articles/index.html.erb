@@ -217,7 +217,7 @@
                                 });
                             }
                             sessionStorage.removeItem('searchKeywords');
-                        })
+                        }).catch(error => console.log('record searches error', error))
             };
     
                 searchInput.addEventListener('input', handleSearchInput);
