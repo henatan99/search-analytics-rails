@@ -1,4 +1,4 @@
-<div class="articles-container" data-controller="articles">
+<div id="articles" class="articles-container" data-controller="articles">
     <% if user_signed_in? %>
         <div class='left-section'>
             <%= render 'your_articles', your_articles: current_user.articles, articles_title: 'Your Articles' %>
@@ -31,7 +31,8 @@
 
         <script>
             document.addEventListener('turbo:load', function() {
-                if (document.body.hasAttribute('data-controller') && document.body.getAttribute('data-controller') === 'articles') {
+                const controllerELem = document.getElementById('articles');
+                if (controllerELem) {
                     const searchInput = document.getElementById('search-input');
                     const searchBtn = document.getElementById('search-submit');
 
