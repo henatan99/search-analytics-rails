@@ -216,6 +216,7 @@
                 window.addEventListener('beforeunload', handleSearchesRecord);
                 window.addEventListener('unload', handleSearchesRecord);
                 searchBtn.addEventListener('submit', handleSearchesRecord);
+                searchBtn.addEventListener('input', handleSearchesRecord);
 
                 fetch(`articles.json`)
                             .then(response => response.json())
