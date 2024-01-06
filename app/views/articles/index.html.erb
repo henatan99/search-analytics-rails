@@ -1,4 +1,4 @@
-<div class="articles-container">
+<div class="articles-container" data-controller="articles">
     <% if user_signed_in? %>
         <div class='left-section'>
             <%= render 'your_articles', your_articles: current_user.articles, articles_title: 'Your Articles' %>
@@ -9,7 +9,7 @@
         </div>
     <% end %>
     
-    <div class="right-section" data-controller="articles">
+    <div class="right-section">
         <div class='search-bar'>
             <form id='searchForm'>
                 <input placeholder='Search for Articles' id='search-input'/>
