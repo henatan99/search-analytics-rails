@@ -33,6 +33,11 @@
         document.addEventListener('turbo:load', function() {
             const searchInput = document.getElementById('search-input');
             const searchBtn = document.getElementById('search-submit');
+
+            if (!sessionStorage.getItem('searchKeywords')) {
+                sessionStorage.setItem('searchKeywords', JSON.stringify([]));
+            }
+
             var ip_address_id;
 
             const createIp = () => {
@@ -66,22 +71,22 @@
 
             handleAssignIp();
 
-            fetch(`articles.json`)
+            const fecthArticlesDisplaySearchResults = () => {
+                fetch(`articles.json`)
                 .then(response => response.json())
                 .then(data => displaySearchResults(data))
                 .catch(error => console.error('Error fetching search results:', error));
-                
-            fetch(`ip_addresses.json`)
+            }
+
+            const fetchSearchesListSearchRecords = () => {
+                fetch(`ip_addresses.json`)
                 .then(response => response.json())
                 .then(data => ListSearchRecords(data.address, data.searches))
                 .catch(error => console.error('Error fetching search records:', error));
-
-            if (!sessionStorage.getItem('searchKeywords')) {
-                sessionStorage.setItem('searchKeywords', JSON.stringify([]));
             }
 
-            let lastSearchQuery = '';
-            const debounceDelay = 1000;
+            fecthArticlesDisplaySearchResults();
+            fetchSearchesListSearchRecords();
 
             const recordSearch = (query, ip_address_id) => {
                 console.log('I am about to record search');
@@ -105,15 +110,8 @@
                 storeSearches(query);
                 
                 if(query) {
-                    fetch(`articles.json?query=${encodeURIComponent(query)}`)
-                        .then(response => response.json())
-                        .then(data => displaySearchResults(data))
-                        .catch(error => console.error('Error fetching search results:', error));
-
-                    fetch(`ip_addresses.json`)
-                        .then(response => response.json())
-                        .then(data => ListSearchRecords(data.address, data.searches))
-                        .catch(error => console.error('Error fetching search records:', error));
+                    fecthArticlesDisplaySearchResults();
+                    fetchSearchesListSearchRecords();
                 }
                 console.log('next create ip');
                 console.log('now check session storage', sessionStorage.getItem('searchKeywords'));
