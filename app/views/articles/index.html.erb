@@ -70,8 +70,8 @@
                     body: JSON.stringify({}),
                 })
                 .then(response => response.json())
-                .then(data => console.log(data)
-                .catch(error => console.error('Error creating ip:', error)));
+                .then(data => console.log(data));
+                // .catch(error => console.error('Error creating ip:', error)));
             }
 
             const handleSearchInput = () =>  {
@@ -95,7 +95,7 @@
                 createIp();
                 console.log('now check session storage', sessionStorage.getItem('searchKeywords'));
                 const records = sessionStorage.getItem('searchKeywords')
-                if(records) ListSessionSearchRecords(records);
+                // if(records) ListSessionSearchRecords(records);
             };
 
             function displaySearchResults(articles) {
