@@ -34,6 +34,20 @@
             const searchInput = document.getElementById('search-input');
             const searchBtn = document.getElementById('search-submit');
 
+            var ip_address_id;
+
+            fetch(`articles.json`)
+                            .then(response => response.json())
+                            .then(data => displaySearchResults(data))
+                            .catch(error => console.error('Error fetching search results:', error));
+                
+            fetch(`ip_addresses.json`)
+                        .then(response => response.json())
+                        .then(data => ListSearchRecords(data.id, data.address, data.searches))
+                        .catch(error => console.error('Error fetching search records:', error));
+
+            
+
             if (!sessionStorage.getItem('searchKeywords')) {
                 sessionStorage.setItem('searchKeywords', JSON.stringify([]));
             }
@@ -135,11 +149,12 @@
                 } 
             }
 
-            const ListSearchRecords = (address, searches) => {
+            const ListSearchRecords = (id, address, searches) => {
                 console.log('my records', searches);
                 const listItems = document.getElementById('search-records');
                 listItems.innerHTML = '';
                 const ip = document.getElementById('ip_address');
+                ip_address_id = id;
                 
                 if(searches.length > 0) {
                     ip.textContent = `Searches IP: ${address}`;
@@ -208,16 +223,12 @@
                 console.log('handleSearchesReecored trigered')
                 const searchKeywords = JSON.parse(sessionStorage.getItem('searchKeywords'));
 
-                fetch(`ip_addresses.json`)
-                        .then(response => response.json())
-                        .then(data => (() => {
-                            if (searchKeywords && searchKeywords.length > 0) {
-                                    searchKeywords.forEach(keyword => {
-                                    recordSearch(keyword, data.id);
-                                });
-                            }
-                            sessionStorage.removeItem('searchKeywords');
-                        })).catch(error => console.log('record searches error', error))
+                if (ip_address_id && searchKeywords && searchKeywords.length > 0) {
+                    searchKeywords.forEach(keyword => {
+                        recordSearch(keyword, ip_address_id);
+                    });
+                }
+                sessionStorage.removeItem('searchKeywords');
             };
     
                 searchInput.addEventListener('input', handleSearchInput);
@@ -225,16 +236,6 @@
                 window.addEventListener('unload', handleSearchesRecord);
                 searchBtn.addEventListener('submit', handleSearchesRecord);
                 searchBtn.addEventListener('input', handleSearchesRecord);
-
-                fetch(`articles.json`)
-                            .then(response => response.json())
-                            .then(data => displaySearchResults(data))
-                            .catch(error => console.error('Error fetching search results:', error));
-                
-                fetch(`ip_addresses.json`)
-                        .then(response => response.json())
-                        .then(data => ListSearchRecords(data.address, data.searches))
-                        .catch(error => console.error('Error fetching search records:', error));
 
             });
 
