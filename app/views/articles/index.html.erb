@@ -43,7 +43,6 @@
 
             const recordSearch = (query) => {
                 console.log('I am about to record search');
-                const ip_address_id = 1;
 
                 fetch('/searches', {
                     method: 'POST',
@@ -60,7 +59,7 @@
 
             const createIp = () => {
                 console.log('I am about to  create ip');
-                
+
                 fetch('/ip_addresses', {
                     method: 'POST',
                     headers: {
@@ -70,8 +69,8 @@
                     body: JSON.stringify({}),
                 })
                 .then(response => response.json())
-                .then(data => console.log(data));
-                // .catch(error => console.error('Error creating ip:', error)));
+                .then(data => console.log(data)
+                .catch(error => console.error('Error creating ip:', error)));
             }
 
             const handleSearchInput = () =>  {
@@ -87,12 +86,17 @@
 
                     fetch(`ip_addresses.json`)
                         .then(response => response.json())
-                        .then(data => ListSearchRecords(data.address, data.searches))
+                        .then(data => {
+                            if(data) {
+                                ListSearchRecords(data.address, data.searches)
+                            } else {
+                                createIp();
+                            }
+                        })
                         .catch(error => console.error('Error fetching search records:', error));
                     
                 }
                 console.log('next create ip');
-                createIp();
                 console.log('now check session storage', sessionStorage.getItem('searchKeywords'));
                 const records = sessionStorage.getItem('searchKeywords')
                 // if(records) ListSessionSearchRecords(records);
