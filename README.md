@@ -328,6 +328,10 @@ Optionally defining the search method inside the model instead of the controller
 - The articles route is the page to display list of articles and also have search input 
 - The users routes is for authenticated users who can create articles 
 
+##  Deploy to heroku 
+- Create `Procfile`
+- Copy and paste   `web: bundle exec puma -C config/puma.rb`
+
 ## [Live demo](https://search-analytics-rails-74733d3ea510.herokuapp.com/)
 
 ## Built With
