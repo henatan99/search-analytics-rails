@@ -22,6 +22,7 @@ class IpAddressesController < ApplicationController
     def create
         ip_address = IpAddress.find_by(address: request.remote_ip)
         if(ip_address) {
+            @ip_address = ip_address
             render json: { message: 'Search was successfully created.', ip_address: @ip_address}
         } else {
             @ip_address = IpAddress.new(address: request.remote_ip)
