@@ -34,6 +34,22 @@
             const searchInput = document.getElementById('search-input');
             const searchBtn = document.getElementById('search-submit');
 
+            const createIp = () => {
+                console.log('I am about to  create ip');
+
+                fetch('/ip_addresses', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': getCSRFToken(),
+                    },
+                    body: JSON.stringify({}),
+                })
+                .then(response => response.json())
+                .then(data => {ip_address_id = data.ip_address.id; console.log(data)})
+                .catch(error => console.error('Error creating ip:', error));
+            }
+
             var ip_address_id;
 
             createIp();
@@ -69,22 +85,6 @@
                 .then(response => response.json())
                 .then(data => console.log(data)
                 .catch(error => console.error('Error recording search:', error)));
-            }
-
-            const createIp = () => {
-                console.log('I am about to  create ip');
-
-                fetch('/ip_addresses', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-Token': getCSRFToken(),
-                    },
-                    body: JSON.stringify({}),
-                })
-                .then(response => response.json())
-                .then(data => {ip_address_id = data.ip_address.id; console.log(data)})
-                .catch(error => console.error('Error creating ip:', error));
             }
 
             const handleSearchInput = () =>  {
