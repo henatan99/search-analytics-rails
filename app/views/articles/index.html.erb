@@ -30,215 +30,216 @@
         <%= render 'articles' %>
 
         <script>
-        document.addEventListener('turbo:load', function() {
-            const searchInput = document.getElementById('search-input');
-            const searchBtn = document.getElementById('search-submit');
+            document.addEventListener('turbo:load', function() {
+                if (document.body.hasAttribute('data-controller') && document.body.getAttribute('data-controller') === 'ArticlesController') {
+                    const searchInput = document.getElementById('search-input');
+                    const searchBtn = document.getElementById('search-submit');
 
-            if (!sessionStorage.getItem('searchKeywords')) {
-                sessionStorage.setItem('searchKeywords', JSON.stringify([]));
-            }
+                    if (!sessionStorage.getItem('searchKeywords')) {
+                        sessionStorage.setItem('searchKeywords', JSON.stringify([]));
+                    }
 
-            var ip_address_id;
+                    var ip_address_id;
 
-            const createIp = () => {
-                console.log('I am about to  create ip');
+                    const createIp = () => {
+                        console.log('I am about to  create ip');
 
-                fetch('/ip_addresses', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-Token': getCSRFToken(),
-                    },
-                    body: JSON.stringify({}),
-                })
-                .then(response => response.json())
-                .then(data => {ip_address_id = data.ip_address.id; console.log(data)})
-                .catch(error => console.error('Error creating ip:', error));
-            }
+                        fetch('/ip_addresses', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-Token': getCSRFToken(),
+                            },
+                            body: JSON.stringify({}),
+                        })
+                        .then(response => response.json())
+                        .then(data => {ip_address_id = data.ip_address.id; console.log(data)})
+                        .catch(error => console.error('Error creating ip:', error));
+                    }
 
-            const handleAssignIp = () => {
-                fetch(`ip_addresses.json`)
-                .then(response => response.json())
-                .then(data => {
-                    if(data.id) {
-                        ip_address_id = data.id;
-                    } else {
-                        createIp()
-                    } 
-                })
-                .catch(error => console.error('Error fetching ip address:', error));
-            }
+                    const handleAssignIp = () => {
+                        fetch(`ip_addresses.json`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if(data.id) {
+                                ip_address_id = data.id;
+                            } else {
+                                createIp()
+                            } 
+                        })
+                        .catch(error => console.error('Error fetching ip address:', error));
+                    }
 
-            handleAssignIp();
+                    handleAssignIp();
 
-            const fecthArticlesDisplaySearchResults = () => {
-                fetch(`articles.json`)
-                .then(response => response.json())
-                .then(data => displaySearchResults(data))
-                .catch(error => console.error('Error fetching search results:', error));
-            }
+                    const fecthArticlesDisplaySearchResults = () => {
+                        fetch(`articles.json`)
+                        .then(response => response.json())
+                        .then(data => displaySearchResults(data))
+                        .catch(error => console.error('Error fetching search results:', error));
+                    }
 
-            const fetchSearchesListSearchRecords = () => {
-                fetch(`ip_addresses.json`)
-                .then(response => response.json())
-                .then(data => ListSearchRecords(data.address, data.searches))
-                .catch(error => console.error('Error fetching search records:', error));
-            }
+                    const fetchSearchesListSearchRecords = () => {
+                        fetch(`ip_addresses.json`)
+                        .then(response => response.json())
+                        .then(data => ListSearchRecords(data.address, data.searches))
+                        .catch(error => console.error('Error fetching search records:', error));
+                    }
 
-            fecthArticlesDisplaySearchResults();
-            fetchSearchesListSearchRecords();
-
-            const recordSearch = (query, ip_address_id) => {
-                console.log('I am about to record search');
-
-                fetch('/searches', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-Token': getCSRFToken(),
-                    },
-                    body: JSON.stringify({ query, ip_address_id }),
-                })
-                .then(response => response.json())
-                .then(data => console.log(data)
-                .catch(error => console.error('Error recording search:', error)));
-            }
-
-            const handleSearchInput = () =>  {
-                const query = event.target.value.trim();
-                console.log('query', query)
-                storeSearches(query);
-                
-                if(query) {
                     fecthArticlesDisplaySearchResults();
                     fetchSearchesListSearchRecords();
-                }
-                console.log('next create ip');
-                console.log('now check session storage', sessionStorage.getItem('searchKeywords'));
-                const records = sessionStorage.getItem('searchKeywords')
-                // if(records) ListSessionSearchRecords(records);
-            };
 
-            function displaySearchResults(articles) {
-                const searchResultsContainer = document.getElementById('articles-wrapper');
-                searchResultsContainer.innerHTML = '';
+                    const recordSearch = (query, ip_address_id) => {
+                        console.log('I am about to record search');
 
-                if(articles.length > 0) {
-                    const ul = document.createElement('ul');
+                        fetch('/searches', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-Token': getCSRFToken(),
+                            },
+                            body: JSON.stringify({ query, ip_address_id }),
+                        })
+                        .then(response => response.json())
+                        .then(data => console.log(data)
+                        .catch(error => console.error('Error recording search:', error)));
+                    }
 
-                    articles.forEach(article => {
-                        const li = document.createElement('li');
-
-                        const a = document.createElement('a');
-                        a.setAttribute('href', `/articles/${article.id}`)
+                    const handleSearchInput = () =>  {
+                        const query = event.target.value.trim();
+                        console.log('query', query)
+                        storeSearches(query);
                         
-                        const h2 = document.createElement('h2');
-                        h2.textContent = article.title;
-                        h2.classList.add('article-title')
+                        if(query) {
+                            fecthArticlesDisplaySearchResults();
+                            fetchSearchesListSearchRecords();
+                        }
+                        console.log('next create ip');
+                        console.log('now check session storage', sessionStorage.getItem('searchKeywords'));
+                        const records = sessionStorage.getItem('searchKeywords')
+                        // if(records) ListSessionSearchRecords(records);
+                    };
 
-                        const p = document.createElement('p');
-                        p.textContent = article.body;
-                        p.classList.add('article-body');
+                    function displaySearchResults(articles) {
+                        const searchResultsContainer = document.getElementById('articles-wrapper');
+                        searchResultsContainer.innerHTML = '';
 
-                        a.appendChild(h2);
+                        if(articles.length > 0) {
+                            const ul = document.createElement('ul');
 
-                        li.appendChild(a);
-                        li.appendChild(p);
-                    
-                        ul.appendChild(li);
-                    });
+                            articles.forEach(article => {
+                                const li = document.createElement('li');
 
-                    searchResultsContainer.appendChild(ul);
-                } 
-            }
+                                const a = document.createElement('a');
+                                a.setAttribute('href', `/articles/${article.id}`)
+                                
+                                const h2 = document.createElement('h2');
+                                h2.textContent = article.title;
+                                h2.classList.add('article-title')
 
-            const ListSearchRecords = (address, searches) => {
-                console.log('my records', searches);
-                const listItems = document.getElementById('search-records');
-                listItems.innerHTML = '';
-                const ip = document.getElementById('ip_address');
-                
-                if(searches.length > 0) {
-                    ip.textContent = `Searches IP: ${address}`;
-                    searches.forEach(record => {
-                        const li = document.createElement('li');
-                        li.textContent = record.query;
-                        listItems.appendChild(li);
-                    })
-                }
-            }
+                                const p = document.createElement('p');
+                                p.textContent = article.body;
+                                p.classList.add('article-body');
 
+                                a.appendChild(h2);
 
-            const ListSessionSearchRecords = (records) => {
-                const listItems = document.getElementById('session-search-records');
-                listItems.innerHTML = '';
-                console.log('session records to list', records);
+                                li.appendChild(a);
+                                li.appendChild(p);
+                            
+                                ul.appendChild(li);
+                            });
 
-                if(records.length > 0) {
-                     records.forEach(record => {
-                        const li = document.createElement('li');
-                        li.textContent = record;
-                        listItems.appendChild(li);
-                    })
-                }
-            }
-
-            function getCSRFToken() {
-                const csrfTokenMeta = document.head.querySelector('meta[name="csrf-token"]');
-                console.log('mycsrdTokenMeta', csrfTokenMeta);
-                return csrfTokenMeta ? csrfTokenMeta.content : '';
-            }
-
-            const storeSearches = (newKeyword) => {
-                if (!sessionStorage.getItem('searchKeywords')) {
-                    sessionStorage.setItem('searchKeywords', JSON.stringify([]));
-                }
-                if (newKeyword !== '') {
-                    const existingKeywords = JSON.parse(sessionStorage.getItem('searchKeywords')) || [];
-                    const newKeywords = [];
-                    let valid = true;
-                    let newKeyWordRegex = new RegExp(newKeyword);
-                    for (let i = 0; i < existingKeywords.length; i++) {
-                        let keyword = existingKeywords[i];
-                        let keywordRegex = new RegExp(keyword);
-                        if(keyword.match(newKeyWordRegex)) {
-                            valid = false;
-                            break;
+                            searchResultsContainer.appendChild(ul);
                         } 
-                        if(!newKeyword.match(keywordRegex)) {
-                            newKeywords.push(keyword);
+                    }
+
+                    const ListSearchRecords = (address, searches) => {
+                        console.log('my records', searches);
+                        const listItems = document.getElementById('search-records');
+                        listItems.innerHTML = '';
+                        const ip = document.getElementById('ip_address');
+                        
+                        if(searches.length > 0) {
+                            ip.textContent = `Searches IP: ${address}`;
+                            searches.forEach(record => {
+                                const li = document.createElement('li');
+                                li.textContent = record.query;
+                                listItems.appendChild(li);
+                            })
                         }
                     }
-    
-                    if (valid) {
-                        newKeywords.push(newKeyword);
-                        sessionStorage.setItem('searchKeywords', JSON.stringify(newKeywords));
 
-                        console.log('Updated Search Keywords:', newKeywords);
-                    } else {
-                        console.log('Keyword already exists:', newKeyword);
+
+                    const ListSessionSearchRecords = (records) => {
+                        const listItems = document.getElementById('session-search-records');
+                        listItems.innerHTML = '';
+                        console.log('session records to list', records);
+
+                        if(records.length > 0) {
+                            records.forEach(record => {
+                                const li = document.createElement('li');
+                                li.textContent = record;
+                                listItems.appendChild(li);
+                            })
+                        }
                     }
-                }
-            }
+
+                    function getCSRFToken() {
+                        const csrfTokenMeta = document.head.querySelector('meta[name="csrf-token"]');
+                        console.log('mycsrdTokenMeta', csrfTokenMeta);
+                        return csrfTokenMeta ? csrfTokenMeta.content : '';
+                    }
+
+                    const storeSearches = (newKeyword) => {
+                        if (!sessionStorage.getItem('searchKeywords')) {
+                            sessionStorage.setItem('searchKeywords', JSON.stringify([]));
+                        }
+                        if (newKeyword !== '') {
+                            const existingKeywords = JSON.parse(sessionStorage.getItem('searchKeywords')) || [];
+                            const newKeywords = [];
+                            let valid = true;
+                            let newKeyWordRegex = new RegExp(newKeyword);
+                            for (let i = 0; i < existingKeywords.length; i++) {
+                                let keyword = existingKeywords[i];
+                                let keywordRegex = new RegExp(keyword);
+                                if(keyword.match(newKeyWordRegex)) {
+                                    valid = false;
+                                    break;
+                                } 
+                                if(!newKeyword.match(keywordRegex)) {
+                                    newKeywords.push(keyword);
+                                }
+                            }
             
-            const handleSearchesRecord = () => {
-                console.log('handleSearchesReecored trigered')
-                const searchKeywords = JSON.parse(sessionStorage.getItem('searchKeywords'));
+                            if (valid) {
+                                newKeywords.push(newKeyword);
+                                sessionStorage.setItem('searchKeywords', JSON.stringify(newKeywords));
 
-                if (ip_address_id && searchKeywords && searchKeywords.length > 0) {
-                    searchKeywords.forEach(keyword => {
-                        recordSearch(keyword, ip_address_id);
-                    });
+                                console.log('Updated Search Keywords:', newKeywords);
+                            } else {
+                                console.log('Keyword already exists:', newKeyword);
+                            }
+                        }
+                    }
+                    
+                    const handleSearchesRecord = () => {
+                        console.log('handleSearchesReecored trigered')
+                        const searchKeywords = JSON.parse(sessionStorage.getItem('searchKeywords'));
+
+                        if (ip_address_id && searchKeywords && searchKeywords.length > 0) {
+                            searchKeywords.forEach(keyword => {
+                                recordSearch(keyword, ip_address_id);
+                            });
+                        }
+                        sessionStorage.removeItem('searchKeywords');
+                    };
+            
+                    searchInput.addEventListener('input', handleSearchInput);
+                    window.addEventListener('beforeunload', handleSearchesRecord);
+                    window.addEventListener('unload', handleSearchesRecord);
+                    searchBtn.addEventListener('submit', handleSearchesRecord);
                 }
-                sessionStorage.removeItem('searchKeywords');
-            };
-    
-                searchInput.addEventListener('input', handleSearchInput);
-                window.addEventListener('beforeunload', handleSearchesRecord);
-                window.addEventListener('unload', handleSearchesRecord);
-                searchBtn.addEventListener('submit', handleSearchesRecord);
             });
-
-    </script>
+        </script>
     </div>
 </div>
