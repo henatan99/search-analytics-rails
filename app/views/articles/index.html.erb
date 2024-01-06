@@ -54,9 +54,14 @@
 
             fetch(`ip_addresses.json`)
                 .then(response => response.json())
-                .then(data => {if(!data.id) createIp()})
+                .then(data => {
+                    if(data.id) {
+                        ip_address_id = data.id;
+                    } else {
+                        createIp()
+                    } 
+                })
                 .catch(error => console.error('Error fetching ip address:', error));
-            createIp();
 
             fetch(`articles.json`)
                 .then(response => response.json())
