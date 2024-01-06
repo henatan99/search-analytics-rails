@@ -62,7 +62,7 @@
                         fetch(`ip_addresses.json`)
                         .then(response => response.json())
                         .then(data => {
-                            if(data.id) {
+                            if(data) {
                                 ip_address_id = data.id;
                             } else {
                                 createIp()
