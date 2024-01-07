@@ -124,6 +124,7 @@
                     function displaySearchResults(articles) {
                         const searchResultsContainer = document.getElementById('articles-wrapper');
                         searchResultsContainer.innerHTML = '';
+                        console.log('filtered articles', articles);
 
                         if(articles.length > 0) {
                             const ul = document.createElement('ul');
