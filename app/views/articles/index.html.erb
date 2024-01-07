@@ -118,7 +118,7 @@
                         console.log('next create ip');
                         console.log('now check session storage', sessionStorage.getItem('searchKeywords'));
                         const records = sessionStorage.getItem('searchKeywords')
-                        // if(records) ListSessionSearchRecords(records);
+                        if(records) ListSessionSearchRecords(JSON.parse(records));
                     };
 
                     function displaySearchResults(articles) {
