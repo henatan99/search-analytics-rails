@@ -111,7 +111,7 @@
                         console.log('query', query)
                         storeSearches(query);
                         
-                        if(query) {
+                        if(query && query.length > 0) {
                             fecthArticlesDisplaySearchResults(query);
                             fetchSearchesListSearchRecords();
                         }
