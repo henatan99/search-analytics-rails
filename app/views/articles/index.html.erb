@@ -103,7 +103,9 @@
                             body: JSON.stringify({ query, ip_address_id }),
                         })
                         .then(response => response.json())
-                        .then(data => console.log(data))
+                        .then(data => {
+                            console.log(data)
+                        })
                         .catch(error => console.error('Error recording search:', error));
                     }
 
@@ -234,7 +236,6 @@
                             });
                         }
                         sessionStorage.removeItem('searchKeywords');
-                        fetchSearchesListSearchRecords();
                     };
             
                     searchInput.addEventListener('input', handleSearchInput);
