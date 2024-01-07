@@ -39,7 +39,7 @@
                     if (!sessionStorage.getItem('searchKeywords')) {
                         sessionStorage.setItem('searchKeywords', JSON.stringify([]));
                     } else {    
-                        if(records) ListSessionSearchRecords(JSON.parse(
+                        ListSessionSearchRecords(JSON.parse(
                             sessionStorage.getItem('searchKeywords')
                         ));
                     }
