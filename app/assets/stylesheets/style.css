@@ -255,3 +255,70 @@ header a {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+
+
+
+/* Login page */
+
+.sessions, .registrations, .confirmations, .mailer, .passwords, .unlocks {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 50px auto;
+    max-width: 320px;
+}
+
+.field {
+    margin-bottom: 15px;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.field input[type="text"],
+.field input[type="email"],
+.field input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.field input[type="submit"] {
+    background-color: #4caf50;
+    color: #fff;
+    padding: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.field input[type="submit"]:hover{
+    background-color: #45a049;
+}
+
+.actions input[type="submit"] {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.actions input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.actions a {
+    color: #3498db;
+    text-decoration: none;
+    margin-right: 10px;
+}
+  
+.actions a:hover {
+    text-decoration: underline;
+}
