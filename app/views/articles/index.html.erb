@@ -103,8 +103,8 @@
                             body: JSON.stringify({ query, ip_address_id }),
                         })
                         .then(response => response.json())
-                        .then(data => console.log(data)
-                        .catch(error => console.error('Error recording search:', error)));
+                        .then(data => console.log(data))
+                        .catch(error => console.error('Error recording search:', error));
                     }
 
                     const handleSearchInput = () =>  {
@@ -114,7 +114,6 @@
                         
                         if(query && query.length > 0) {
                             fecthArticlesDisplaySearchResults(query);
-                            fetchSearchesListSearchRecords();
                         }
                         console.log('next create ip');
                         console.log('now check session storage', sessionStorage.getItem('searchKeywords'));
