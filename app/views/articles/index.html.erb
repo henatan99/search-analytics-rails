@@ -11,7 +11,7 @@
     
     <div class="right-section">
         <div class='search-bar'>
-            <form id='searchForm'>
+            <form id='search-form'>
                 <input placeholder='Search for Articles' id='search-input'/>
                 <button type='submit' id='search-submit'>Submit</button>
             </form>
@@ -34,6 +34,7 @@
                 const controllerELem = document.getElementById('articles');
                 if (controllerELem) {
                     const searchInput = document.getElementById('search-input');
+                    const searchForm = document.getElementById('search-form');
                     const searchBtn = document.getElementById('search-submit');
 
                     if (!sessionStorage.getItem('searchKeywords')) {
@@ -240,7 +241,7 @@
                     searchInput.addEventListener('input', handleSearchInput);
                     window.addEventListener('beforeunload', handleSearchesRecord);
                     window.addEventListener('unload', handleSearchesRecord);
-                    searchBtn.addEventListener('submit', handleSearchesRecord);
+                    searchForm.addEventListener('submit', handleSearchesRecord);
                 }
             });
         </script>
