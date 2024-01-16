@@ -249,78 +249,26 @@ Optionally defining the search method inside the model instead of the controller
 ```
 #### Vanilla JavaScript to dynamically render articles and record search
 
-```
-    document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('search-input');
-    const searchResultsContainer = document.getElementById('search-results');
-    let lastSearchQuery = '';
-    const debounceDelay = 1000; // Adjust the debounce delay as needed (in milliseconds)
-
-    const recordSearch = (query) => {
-        // Send the search query to your backend for recording
-        console.log(`Recording search: ${query}`);
-        // ... (your code to send the query to the backend)
-        // You can use fetch or another method to send the query to your backend
-        // Example using fetch:
-        fetch('/record-search', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ query }),
+#### `importmap-rails` to separate js script code from views
+- Importmap for Rails is automatically included in Rails 7+ for new applications
+- Add `src` folder inside `app/javascript`
+- Add `searchEngine.js` file inside the `src` folder which has the wrapper script code
+    ```
+        document.addEventListener('turbo:load', function() {
+            ...
         })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error('Error recording search:', error));
-    };
-
-    const debounce = (func, delay) => {
-        let timeoutId;
-        return function (...args) {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => func.apply(this, args), delay);
-        };
-    };
-
-    const handleSearchInput = debounce((event) => {
-        const query = event.target.value.trim();
-
-        // Check if the query is not empty and different from the last recorded query
-        if (query && query !== lastSearchQuery) {
-            recordSearch(query);
-            lastSearchQuery = query;
-
-            // Example: Fetch search results from the server
-            fetch(`/articles?query=${encodeURIComponent(query)}`)
-                .then(response => response.json())
-                .then(data => displaySearchResults(data))
-                .catch(error => console.error('Error fetching search results:', error));
-        }
-    }, debounceDelay);
-
-    searchInput.addEventListener('input', handleSearchInput);
-
-    function displaySearchResults(articles) {
-        searchResultsContainer.innerHTML = '';
-
-        if (articles.length > 0) {
-            const ul = document.createElement('ul');
-
-            articles.forEach(article => {
-                const li = document.createElement('li');
-                li.textContent = article.title;
-                ul.appendChild(li);
-            });
-
-            searchResultsContainer.appendChild(ul);
-            } else {
-            const p = document.createElement('p');
-            p.textContent = 'No articles found.';
-            searchResultsContainer.appendChild(p);
-            }
-        }
-    });
-```
+    ```
+- In your `config/importmap.rb` file pin all js files that are inside source
+    `pin_all_from 'app/javascript/src', under: 'src'`
+- In your `app/javascript/application.js` import the main script file `searchEngine.js`
+    `import 'src/searchEngine'`
+- Make sure the import map tag is present in the `application.html.erb` head tag
+    ```
+        <head>
+            ...
+            <%= javascript_importmap_tags %>
+        <head>
+    ```
 
 ## Routes 
 
